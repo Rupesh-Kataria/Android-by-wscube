@@ -1,0 +1,141 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/llMain"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/hint_wt"
+        android:id="@+id/edtWeight"
+        android:inputType="number"
+        android:autofillHints="true" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="@string/hint_htf"
+        android:id="@+id/edtHeightFt"
+        android:autofillHints="true" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/edtHeightIn"
+        android:hint="@string/hint_htI"
+        android:inputType="number"
+        android:autofillHints="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate BMI"
+        android:layout_marginTop="11dp"
+        android:backgroundTint="#D81313"
+        android:id="@+id/btnCalculate"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtResult"
+        android:text="Result"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:layout_marginTop="11dp"
+        />
+</LinearLayout>
+
+
+strings.xml
+
+<resources>
+    <string name="app_name">BodayMassAppWscube4</string>
+    <string name="hint_wt">Enter your Weight</string>
+    <string name="hint_htf">Enter your Height(in Ft)</string>
+    <string name="hint_htI">Enter your Height(in In)</string>
+</resources>
+
+
+colors.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorUW">#FFEB3B</color>
+    <color name="colorH">#8BC34A</color>
+    <color name="colorOW">#FF5722</color>
+</resources>
+
+MainActivity.xml
+
+package com.example.bodaymassappwscube4;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        EditText edtWeight,edtHeightFt,edtHeightIn;
+        Button btnCalculate;
+        TextView txtResult;
+        LinearLayout llMain;
+        edtWeight=findViewById(R.id.edtWeight);
+        edtHeightFt=findViewById(R.id.edtHeightFt);
+        edtHeightIn=findViewById(R.id.edtHeightIn);
+        btnCalculate=findViewById(R.id.btnCalculate)  ;
+        txtResult=findViewById(R.id.txtResult);
+        llMain=findViewById(R.id.llMain);
+        btnCalculate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                int wt=Integer.parseInt(edtWeight.getText().toString());
+                int ft=Integer.parseInt(edtHeightFt.getText().toString());
+                int in=Integer.parseInt(edtHeightIn.getText().toString());
+                int totalIn=ft*12+in;
+                double totalCm=totalIn*2.53;
+                double totalM=totalCm/100;
+                double bmi=wt/(totalM*totalM);
+                if(bmi>25)
+                {
+                    txtResult.setText("You are OverWeight");
+                    llMain.setBackgroundColor(getResources().getColor(R.color.colorOW));
+                }else if(bmi<18)
+                {
+                    txtResult.setText("You are UnderWeight");
+                    llMain.setBackgroundColor(getResources().getColor(R.color.colorUW));
+                }
+                else
+                {
+                    txtResult.setText("You're Healthy");
+                    llMain.setBackgroundColor(getResources().getColor(R.color.colorH));
+                }
+            }
+        });
+
+    }
+}
+
