@@ -1,0 +1,132 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:visibility="gone"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select an ID Proof"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"/>
+    </LinearLayout>
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="77dp"
+        android:hint="Search here.."
+        android:id="@+id/actxtView"/>
+
+</LinearLayout>
+
+MainActivity.java
+
+age com.example.listviewwscube8;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+    ListView listView;
+    Spinner spinner;
+    AutoCompleteTextView actxtView;
+
+    ArrayList<String> arrNames = new ArrayList<>();
+    ArrayList<String> arrIds = new ArrayList<>();
+    ArrayList<String> arrLanguages=new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        listView = findViewById(R.id.listView);
+        spinner = findViewById(R.id.spinner);
+        actxtView = findViewById(R.id.actxtView);
+        arrNames.add("Ram");
+        arrNames.add("Raman");
+        arrNames.add("Ramanujan");
+        arrNames.add("Ramjan");
+        arrNames.add("Rameez");
+        arrNames.add("Ram");
+        arrNames.add("Raman");
+        arrNames.add("Ramanujan");
+        arrNames.add("Ramjan");
+        arrNames.add("Rameez");
+        arrNames.add("Ram");
+        arrNames.add("Raman");
+        arrNames.add("Ramanujan");
+        arrNames.add("Ramjan");
+        arrNames.add("Rameez");
+        arrNames.add("Ram");
+        arrNames.add("Raman");
+        arrNames.add("Ramanujan");
+        arrNames.add("Ramjan");
+        arrNames.add("Rameez");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, arrNames);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    Toast.makeText(MainActivity.this, "Clicked First Item", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        //Spinner
+        arrIds.add("Aadhar Card");
+        arrIds.add("Pan Card");
+        arrIds.add("Voter Card");
+        arrIds.add("Driving License Card");
+        arrIds.add("Ration Card");
+        arrIds.add("10th Score Card");
+        arrIds.add("12th Score Card");
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, arrIds);
+        spinner.setAdapter(spinnerAdapter);
+        arrLanguages.add("C");
+        arrLanguages.add("C++");
+        arrLanguages.add("Java");
+        arrLanguages.add("PHP");
+        arrLanguages.add("Objective c");
+        arrLanguages.add("C#");
+        arrLanguages.add("CScript");
+        ArrayAdapter<String> actvAdapter =new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,arrLanguages);
+        actxtView.setAdapter(actvAdapter);
+        actxtView.setThreshold(1);
+
+    }
+}
