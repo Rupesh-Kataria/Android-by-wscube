@@ -1,0 +1,47 @@
+activity_main.xml
+
+package com.example.card_view_wscube11;
+
+import static com.example.card_view_wscube11.R.id.cardView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+CardView cardView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        cardView=findViewById(R.id.cardView);
+        cardView.setRadius(5.0f);
+        cardView.setUseCompatPadding(true);
+    }
+}
+//Note-We can also set attribute of cardview in java file also along with xml although the function which used for this in java their name vary .
+First we have to add cardview in byild gradle dependencies.
+
+MainActivity.java
+
+package com.example.card_view_wscube11;
+
+import static com.example.card_view_wscube11.R.id.cardView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+CardView cardView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        cardView=findViewById(R.id.cardView);
+        cardView.setRadius(5.0f);
+        cardView.setUseCompatPadding(true);
+    }
+}
