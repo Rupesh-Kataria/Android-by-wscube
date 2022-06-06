@@ -1,0 +1,360 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        app:tint="#8BC34A"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btnOpenDialog"
+        android:src="@drawable/a"
+        android:layout_margin="21dp" />
+
+</RelativeLayout>
+
+
+MainActivity.java
+
+package com.example.recyclerview_wscube12;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
+    ArrayList<ContactModel> arrContacts =new ArrayList<>();
+    RecycleContactAdapter adapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        RecyclerView recyclerView=findViewById(R.id.recyclerContact);
+        FloatingActionButton btnOpenDialog=findViewById(R.id.btnOpenDialog);
+        btnOpenDialog.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.add_update_lay);
+
+                EditText edtName=dialog.findViewById(R.id.edtName);
+                EditText edtNumber=dialog.findViewById(R.id.edtNumber);
+                Button btnAction = dialog.findViewById(R.id.btnAction);
+                btnAction.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View v) {
+                        String name="",number="";
+                        if (!edtName.getText().toString().equals("")){
+                             name = edtName.getText().toString();
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this,"Please Enter Contact Name ",Toast.LENGTH_SHORT).show();
+                        }
+                        if (!edtNumber.getText().toString().equals("")){
+                             number = edtNumber.getText().toString();
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this,"Please Enter Contact Number ",Toast.LENGTH_SHORT).show();
+                        }
+                        arrContacts.add(new ContactModel(name,number));
+                        adapter.notifyItemInserted(arrContacts.size()-1);
+                        recyclerView.scrollToPosition(arrContacts.size()-1);
+                        dialog.dismiss();
+
+
+                    }
+                });
+                dialog.show();
+
+            }
+        });
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        arrContacts.add(new ContactModel(R.drawable.a,"A","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.b,"B","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.c,"C","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.d,"D","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.e,"E","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.c,"F","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.ic_launcher_background,"G","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.a,"H","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.d,"I","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.j,"J","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.k,"K","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.a,"L","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.b,"M","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.c,"N","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.d,"O","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.e,"P","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.c,"Q","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.ic_launcher_background,"R","987976897"));
+        arrContacts.add(new ContactModel(R.drawable.a,"S","987976897"));
+        adapter =new RecycleContactAdapter(this,arrContacts);
+        recyclerView.setAdapter(adapter);
+    }
+}
+
+add_update_lay.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:paddingRight="21dp"
+    android:paddingLeft="21dp"
+    android:paddingBottom="11dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#9C27B0"
+        android:id="@+id/txtTitle"
+        android:layout_margin="21dp"
+        android:text="Add Contact"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="11dp"
+        android:id="@+id/edtName"
+        android:hint="Enter Name"
+        android:inputType="number"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="11dp"
+        android:id="@+id/edtNumber"
+        android:hint="Enter Number"
+        android:inputType="number"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/btnAction"
+        android:backgroundTint="@color/black"
+        android:layout_marginTop="11dp"
+        android:textColor="@color/design_default_color_secondary"
+        android:layout_gravity="end" />
+</LinearLayout>
+
+
+RecycleContactAdapter.java
+
+package com.example.recyclerview_wscube12;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+
+public class RecycleContactAdapter extends RecyclerView.Adapter<RecycleContactAdapter.ViewHolder> {
+    Context context;
+    ArrayList<ContactModel> arrContacts;
+    RecycleContactAdapter(Context context, ArrayList<ContactModel> arrContacts)
+    {
+        this.context=context;
+        this.arrContacts= this.arrContacts;
+    }
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.contact_row,parent,false);
+        ViewHolder viewHolder =new ViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder,  int position) {
+        ContactModel model = (ContactModel) arrContacts.get(position);
+        holder.imgContact.setImageResource(arrContacts.get(position).img);
+        holder.txtName.setText(arrContacts.get(position).name);
+        holder.txtNumber.setText(arrContacts.get(position).number);
+        holder.llRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.add_update_lay);
+                EditText edtName = dialog.findViewById(R.id.edtName);
+                EditText edtNumber = dialog.findViewById(R.id.edtNumber);
+                Button btnAction = dialog.findViewById(R.id.btnAction);
+                TextView txtTitle = dialog.findViewById(R.id.txtTitle);
+                txtTitle.setText("Update Contact");
+                btnAction.setText("Update");
+                edtName.setText((arrContacts.get(position)).name);
+                edtNumber.setText(arrContacts.get(position).number);
+                btnAction.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        String name = "", number = "";
+                        if (!edtName.getText().toString().equals("")) {
+                            name = edtName.getText().toString();
+                        } else {
+                            Toast.makeText(context, "Please Enter Contact Name ", Toast.LENGTH_SHORT).show();
+                        }
+                        if (!edtNumber.getText().toString().equals("")) {
+                            number = edtNumber.getText().toString();
+                        } else {
+                            Toast.makeText(context, "Please Enter Contact Number ", Toast.LENGTH_SHORT).show();
+                        }
+                        arrContacts.set(position, new ContactModel(arrContacts.get(position).img,name, number));
+                        notifyItemChanged(position);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+
+            }
+        });
+        holder.llshow.setOnLongClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                        .setTitle("Delete Contact")
+                        .setMessage("Are you want to delete")
+                        .setIcon(R.drawable.ic_baseline_delete_24)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                arrContacts.remove(position);
+                                notifyItemRemoved(position);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                builder.show();
+                return true;
+            }
+        });
+    }
+    @Override
+    public int getItemCount() {
+        return arrContacts.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        TextView txtName,txtNumber;
+        ImageView imgContact;
+        LinearLayout llRow;
+        public ViewHolder(View itemView)
+        {
+            super(itemView);
+            txtName=itemView.findViewById(R.id.txtName);
+            txtNumber=itemView.findViewById(R.id.txtNumber);
+            imgContact=itemView.findViewById(R.id.imgContact);
+            llRow=itemView.findViewById(R.id.llRow);
+
+        }
+
+    }
+}
+
+contact_row.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="7dp"
+        app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:id="@+id/llRow"
+            android:padding="11dp">
+
+            <ImageView
+                android:id="@+id/imgContact"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="#0E0E0E"
+                android:contentDescription="Contact Image"
+                tools:srcCompat="@drawable/d" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginStart="11dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Contact"
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txtNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Contact Number" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
